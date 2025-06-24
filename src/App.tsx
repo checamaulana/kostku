@@ -8,13 +8,22 @@ function App() {
             KOSTKU
           </div>
           <nav className="hidden md:flex space-x-8">
-            <a href="#features" className="font-bold hover:text-ocean-blue transition-colors">
+            <a
+              href="#features"
+              className="font-bold hover:text-ocean-blue transition-colors"
+            >
               FITUR
             </a>
-            <a href="#how-it-works" className="font-bold hover:text-ocean-blue transition-colors">
+            <a
+              href="#how-it-works"
+              className="font-bold hover:text-ocean-blue transition-colors"
+            >
               CARA KERJA
             </a>
-            <a href="#contact" className="font-bold hover:text-ocean-blue transition-colors">
+            <a
+              href="#contact"
+              className="font-bold hover:text-ocean-blue transition-colors"
+            >
               KONTAK
             </a>
           </nav>
@@ -34,11 +43,12 @@ function App() {
                 <br />
                 <span className="text-ocean-blue">CARI KOST</span>
                 <br />
-                DI INDONESIA
+                DI SEMARANG
               </h1>
               <p className="text-xl lg:text-2xl font-medium mb-8 leading-relaxed">
-                Temukan kost impian dengan mudah, aman, dan terpercaya. 
-                Kostku menghubungkan mahasiswa dengan pemilik kost terbaik di seluruh Indonesia.
+                Temukan kost impian dengan mudah, aman, dan terpercaya. Kostku
+                menghubungkan mahasiswa dengan pemilik kost terbaik di seluruh
+                Semarang.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-ocean-blue text-white px-8 py-4 text-lg font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
@@ -51,20 +61,19 @@ function App() {
             </div>
             <div className="bg-midnight-blue p-8 brutalist-border brutalist-shadow">
               <div className="text-white">
-                <h3 className="text-2xl font-bold mb-4 uppercase">STATISTIK KOSTKU</h3>
+                <h3 className="text-2xl font-bold mb-4 uppercase">
+                  STATISTIK KOSTKU
+                </h3>
                 <div className="space-y-4">
                   <div className="flex justify-between">
                     <span className="font-medium">Kost Tersedia:</span>
-                    <span className="font-black text-xl">10,000+</span>
+                    <span className="font-black text-xl">100+</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Mahasiswa Aktif:</span>
                     <span className="font-black text-xl">50,000+</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Kota:</span>
-                    <span className="font-black text-xl">100+</span>
-                  </div>
+
                   <div className="flex justify-between">
                     <span className="font-medium">Rating Rata-rata:</span>
                     <span className="font-black text-xl">4.8/5</span>
@@ -140,8 +149,8 @@ function App() {
             <span className="text-ocean-blue">KOSTKU</span> ADALAH SOLUSINYA
           </h2>
           <p className="text-xl lg:text-2xl font-medium mb-12 max-w-4xl mx-auto leading-relaxed">
-            Platform digital dua sisi yang menghubungkan mahasiswa dan pemilik kost 
-            dengan cara yang aman, transparan, dan efisien.
+            Platform digital dua sisi yang menghubungkan mahasiswa dan pemilik
+            kost dengan cara yang aman, transparan, dan efisien.
           </p>
           <div className="bg-ocean-blue text-white p-12 brutalist-border brutalist-shadow">
             <h3 className="text-2xl font-bold uppercase mb-6">
@@ -169,7 +178,7 @@ function App() {
                 PENCARIAN LENGKAP
               </h3>
               <p className="text-lg">
-                Filter berdasarkan lokasi, harga, fasilitas, dan tipe kost. 
+                Filter berdasarkan lokasi, harga, fasilitas, dan tipe kost.
                 Temukan kost yang sesuai dengan kebutuhan Anda.
               </p>
             </div>
@@ -181,8 +190,8 @@ function App() {
                 LISTING TERVERIFIKASI
               </h3>
               <p className="text-lg">
-                Semua kost telah diverifikasi dengan foto asli, 
-                informasi detail, dan ulasan dari penghuni sebelumnya.
+                Semua kost telah diverifikasi dengan foto asli, informasi
+                detail, dan ulasan dari penghuni sebelumnya.
               </p>
             </div>
             <div className="bg-white p-8 brutalist-border brutalist-shadow">
@@ -193,8 +202,8 @@ function App() {
                 DASHBOARD MODERN
               </h3>
               <p className="text-lg">
-                Kelola booking, pembayaran, dan komunikasi 
-                dengan mudah melalui dashboard yang user-friendly.
+                Kelola booking, pembayaran, dan komunikasi dengan mudah melalui
+                dashboard yang user-friendly.
               </p>
             </div>
           </div>
@@ -217,19 +226,25 @@ function App() {
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
                     <span className="font-black">1</span>
                   </div>
-                  <p className="text-lg">Cari kost berdasarkan lokasi dan preferensi</p>
+                  <p className="text-lg">
+                    Cari kost berdasarkan lokasi dan preferensi
+                  </p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
                     <span className="font-black">2</span>
                   </div>
-                  <p className="text-lg">Lihat detail lengkap dan ulasan kost</p>
+                  <p className="text-lg">
+                    Lihat detail lengkap dan ulasan kost
+                  </p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
                     <span className="font-black">3</span>
                   </div>
-                  <p className="text-lg">Hubungi pemilik atau langsung booking</p>
+                  <p className="text-lg">
+                    Hubungi pemilik atau langsung booking
+                  </p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
@@ -266,7 +281,9 @@ function App() {
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
                     <span className="font-black">3</span>
                   </div>
-                  <p className="text-lg">Terima notifikasi booking dari mahasiswa</p>
+                  <p className="text-lg">
+                    Terima notifikasi booking dari mahasiswa
+                  </p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
@@ -278,7 +295,9 @@ function App() {
                   <div className="w-8 h-8 bg-ocean-blue brutalist-border flex items-center justify-center mr-4 flex-shrink-0">
                     <span className="font-black">5</span>
                   </div>
-                  <p className="text-lg">Koordinasi check-in dan terima pembayaran</p>
+                  <p className="text-lg">
+                    Koordinasi check-in dan terima pembayaran
+                  </p>
                 </div>
               </div>
             </div>
@@ -293,7 +312,8 @@ function App() {
             SIAP MEMULAI?
           </h2>
           <p className="text-xl lg:text-2xl font-medium mb-12">
-            Bergabunglah dengan ribuan mahasiswa dan pemilik kost yang sudah mempercayai Kostku
+            Bergabunglah dengan ribuan mahasiswa dan pemilik kost yang sudah
+            mempercayai Kostku
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button className="bg-ocean-blue text-white px-12 py-6 text-xl font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
@@ -307,37 +327,71 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-midnight-blue text-white py-12 border-t-2 border-midnight-blue">
+      <footer
+        id="contact"
+        className="bg-midnight-blue text-white py-12 border-t-2 border-midnight-blue"
+      >
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-2xl font-black uppercase mb-4">KOSTKU</h3>
               <p className="text-lg">
-                Platform #1 untuk mencari dan mengelola kost di Indonesia.
+                Platform #1 untuk mencari kost di Semarang.
               </p>
             </div>
             <div>
               <h4 className="text-lg font-bold uppercase mb-4">PRODUK</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-ocean-blue">Cari Kost</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Daftarkan Kost</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Mobile App</a></li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Cari Kost
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Daftarkan Kost
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-bold uppercase mb-4">BANTUAN</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-ocean-blue">FAQ</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Panduan</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Kontak</a></li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Panduan
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Kontak
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-bold uppercase mb-4">PERUSAHAAN</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-ocean-blue">Tentang Kami</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Karir</a></li>
-                <li><a href="#" className="hover:text-ocean-blue">Blog</a></li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Tentang Kami
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Karir
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-ocean-blue">
+                    Blog
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
