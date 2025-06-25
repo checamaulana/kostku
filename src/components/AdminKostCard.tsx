@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import ConfirmDialog from './ConfirmDialog';
 
-interface KostCardProps {
+interface AdminKostCardProps {
   id: string;
   name: string;
   location: string;
@@ -11,7 +13,7 @@ interface KostCardProps {
   facilities?: string[];
 }
 
-function KostCard({ 
+function AdminKostCard({ 
   id,
   name, 
   location, 
@@ -19,8 +21,10 @@ function KostCard({
   image, 
   type, 
   rating = 4.5,
-  facilities = [] 
-}: KostCardProps) {
+  facilities = []
+}: AdminKostCardProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -43,10 +47,25 @@ function KostCard({
     }
   };
 
+
+  const handleDelete = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    alert(`Kost "${name}" telah dihapus! (UI Demo)`);
+    setIsDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
-    <div className="bg-white brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 cursor-pointer">
-      {/* Image placeholder */}
-      <div className="h-48 bg-gray-200 brutalist-border relative overflow-hidden">
+    <>
+      <div className="bg-white brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+        {/* Image placeholder */}
+        <div className="h-48 bg-gray-200 brutalist-border relative overflow-hidden">
         {image ? (
           <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
@@ -54,13 +73,22 @@ function KostCard({
             <span className="text-4xl">🏠</span>
           </div>
         )}
-        {/* Type badge */}
-        <div className={`absolute top-4 left-4 px-2 py-1 text-sm font-bold uppercase brutalist-border ${getTypeColor(type)}`}>
-          {type}
+        
+        {/* Badges */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          <div className={`px-2 py-1 text-sm font-bold uppercase brutalist-border ${getTypeColor(type)}`}>
+            {type}
+          </div>
         </div>
+        
         {/* Rating badge */}
         <div className="absolute top-4 right-4 bg-white text-midnight-blue px-2 py-1 text-sm font-bold brutalist-border">
           ⭐ {rating}
+        </div>
+        
+        {/* Kost ID */}
+        <div className="absolute bottom-4 right-4 bg-midnight-blue text-white px-2 py-1 text-xs font-bold brutalist-border">
+          ID: {id}
         </div>
       </div>
 
@@ -105,15 +133,39 @@ function KostCard({
           </div>
         )}
 
-        <Link 
-          to={`/kost/${id}`}
-          className="w-full bg-midnight-blue text-white py-3 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 block text-center"
+        {/* Admin Action Buttons */}
+        <div className="grid grid-cols-2 gap-3">
+          <Link 
+            to={`/kost/${id}`}
+            className="bg-midnight-blue text-white py-3 font-bold text-center brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 block uppercase text-sm"
+          >
+            LIHAT DETAIL
+          </Link>
+          <Link
+            to={`/admin/edit-kost/${id}`}
+            className="bg-yellow-600 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm text-center"
+          >
+            EDIT
+          </Link>
+        </div>
+        
+        <button 
+          onClick={handleDelete}
+          className="w-full mt-3 bg-red-600 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm"
         >
-          LIHAT DETAIL
-        </Link>
+          HAPUS KOST
+        </button>
       </div>
     </div>
+    <ConfirmDialog
+      isOpen={isDialogOpen}
+      title="Konfirmasi Hapus"
+      message={`Apakah Anda yakin ingin menghapus kost "${name}"?`}
+      onConfirm={handleConfirmDelete}
+      onCancel={handleCancelDelete}
+    />
+    </>
   );
 }
 
-export default KostCard;
+export default AdminKostCard;
