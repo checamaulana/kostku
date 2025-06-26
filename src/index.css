@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  --color-ocean-blue: hsl(217, 100%, 66%);
+  --color-deep-ocean-blue: hsl(217, 100%, 66%);
+  --color-pale-sky: hsl(214, 95%, 93%);
+  --color-midnight-blue: hsl(227, 40%, 21%);
+}
+
+/* Neo-brutalist custom styles */
+.brutalist-shadow {
+  box-shadow: 6px 6px 0px var(--color-midnight-blue);
+}
+
+.brutalist-shadow:hover {
+  box-shadow: 3px 3px 0px var(--color-midnight-blue);
+}
+
+.brutalist-shadow:active {
+  box-shadow: 0px 0px 0px var(--color-midnight-blue);
+}
+
+.brutalist-border {
+  border: 2px solid var(--color-midnight-blue);
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px var(--color-midnight-blue);
+}
