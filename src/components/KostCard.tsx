@@ -56,7 +56,11 @@ function KostCard({
           </div>
         )}
         {/* Type badge */}
-        <div className={`absolute top-4 left-4 px-2 py-1 text-sm font-bold uppercase brutalist-border ${getTypeColor(type)}`}>
+        <div
+          className={`absolute top-4 left-4 px-2 py-1 text-sm font-bold uppercase brutalist-border ${getTypeColor(
+            type
+          )}`}
+        >
           {type}
         </div>
         {/* Rating badge */}
@@ -70,7 +74,7 @@ function KostCard({
         <h3 className="text-xl font-black uppercase mb-2 text-midnight-blue">
           {name}
         </h3>
-        
+
         <p className="text-lg font-medium text-gray-700 mb-3 flex items-center">
           <span className="mr-2">📍</span>
           {location}
@@ -94,7 +98,7 @@ function KostCard({
                   key={index}
                   className="text-xs font-bold bg-pale-sky text-midnight-blue px-2 py-1 brutalist-border uppercase"
                 >
-                  {facility}
+                  {facility.replace(/[\[\]"]/g, "")}
                 </span>
               ))}
               {safeFacilities.length > 3 && (
@@ -106,7 +110,7 @@ function KostCard({
           </div>
         )}
 
-        <Link 
+        <Link
           to={`/kost/${id}`}
           className="w-full bg-midnight-blue text-white py-3 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 block text-center"
         >

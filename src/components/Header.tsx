@@ -15,7 +15,7 @@ function Header({ currentPage }: HeaderProps) {
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="text-2xl font-black uppercase tracking-tight">
           <Link to="/">
-            KOSTKU
+            CHEKOST
           </Link>
         </div>
         <nav className="hidden md:flex space-x-8">

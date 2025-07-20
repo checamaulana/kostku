@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { getKostById } from '../lib/kostService';
-import { type Kost } from '../lib/supabaseClient';
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { getKostById } from "../lib/kostService";
+import { type Kost } from "../lib/supabaseClient";
 
 function KostDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -11,8 +11,8 @@ function KostDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [checkInDate, setCheckInDate] = useState('');
-  const [duration, setDuration] = useState('1');
+  const [checkInDate, setCheckInDate] = useState("");
+  const [duration, setDuration] = useState("1");
 
   useEffect(() => {
     const fetchKostDetail = async () => {
@@ -23,8 +23,8 @@ function KostDetailPage() {
         setKost(data);
         setError(null);
       } catch (err) {
-        console.error('Error fetching kost detail:', err);
-        setError('Gagal memuat detail kost.');
+        console.error("Error fetching kost detail:", err);
+        setError("Gagal memuat detail kost.");
       } finally {
         setLoading(false);
       }
@@ -48,7 +48,9 @@ function KostDetailPage() {
       <div className="min-h-screen bg-pale-sky text-midnight-blue font-sans">
         <Header currentPage="daftar-kost" />
         <div className="py-20 text-center">
-          <h1 className="text-4xl font-black uppercase mb-4">KOST TIDAK DITEMUKAN</h1>
+          <h1 className="text-4xl font-black uppercase mb-4">
+            KOST TIDAK DITEMUKAN
+          </h1>
           <p className="text-xl">Silakan kembali ke halaman daftar kost.</p>
         </div>
         <Footer />
@@ -58,21 +60,21 @@ function KostDetailPage() {
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'putra':
-        return 'bg-ocean-blue text-white';
-      case 'putri':
-        return 'bg-pink-500 text-white';
-      case 'campur':
-        return 'bg-green-500 text-white';
+      case "putra":
+        return "bg-ocean-blue text-white";
+      case "putri":
+        return "bg-pink-500 text-white";
+      case "campur":
+        return "bg-green-500 text-white";
       default:
-        return 'bg-midnight-blue text-white';
+        return "bg-midnight-blue text-white";
     }
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
@@ -106,15 +108,20 @@ function KostDetailPage() {
                 />
               </div>
             </div>
-            
+
             {/* Thumbnail Images */}
             <div className="grid grid-cols-4 lg:grid-cols-1 gap-4">
-              {[kost.foto, '/placeholder-room-2.jpg', '/placeholder-room-3.jpg', '/placeholder-common-area.jpg'].map((image, index) => (
+              {[
+                kost.foto,
+                "/placeholder-room-2.jpg",
+                "/placeholder-room-3.jpg",
+                "/placeholder-common-area.jpg",
+              ].map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`h-24 lg:h-28 brutalist-border brutalist-shadow overflow-hidden transition-all hover:translate-x-1 hover:translate-y-1 ${
-                    selectedImage === index ? 'border-ocean-blue border-4' : ''
+                    selectedImage === index ? "border-ocean-blue border-4" : ""
                   }`}
                 >
                   <img
@@ -122,7 +129,9 @@ function KostDetailPage() {
                     alt={`${kost.nama} - Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.currentTarget.src = `data:image/svg+xml;charset=UTF-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-size='12' text-anchor='middle' dy='.3em' fill='%236b7280'%3E${index + 1}%3C/text%3E%3C/svg%3E`;
+                      e.currentTarget.src = `data:image/svg+xml;charset=UTF-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-size='12' text-anchor='middle' dy='.3em' fill='%236b7280'%3E${
+                        index + 1
+                      }%3C/text%3E%3C/svg%3E`;
                     }}
                   />
                 </button>
@@ -151,7 +160,11 @@ function KostDetailPage() {
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                    <div className={`px-3 py-1 font-bold text-sm brutalist-border uppercase ${getTypeColor(kost.tipe)}`}>
+                    <div
+                      className={`px-3 py-1 font-bold text-sm brutalist-border uppercase ${getTypeColor(
+                        kost.tipe
+                      )}`}
+                    >
                       {kost.tipe}
                     </div>
                     <div className="flex items-center">
@@ -160,7 +173,7 @@ function KostDetailPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <p className="text-lg leading-relaxed text-gray-800">
                   {kost.deskripsi}
                 </p>
@@ -168,7 +181,9 @@ function KostDetailPage() {
 
               {/* Facilities */}
               <div className="bg-white p-8 brutalist-border brutalist-shadow">
-                <h2 className="text-2xl font-black uppercase mb-6">FASILITAS</h2>
+                <h2 className="text-2xl font-black uppercase mb-6">
+                  FASILITAS
+                </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {safeFacilities.map((facility, index) => (
                     <div
@@ -176,13 +191,21 @@ function KostDetailPage() {
                       className="flex items-center bg-pale-sky p-4 brutalist-border"
                     >
                       <span className="text-2xl mr-3">
-                        {facility === 'WiFi' ? '📶' : 
-                         facility === 'AC' ? '❄️' : 
-                         facility === 'Kamar Mandi Dalam' ? '🚿' : 
-                         facility === 'Dapur Bersama' ? '🍳' : 
-                         facility === 'Parkir Motor' ? '🏍️' : '✅'}
+                        {facility === "WiFi"
+                          ? "📶"
+                          : facility === "AC"
+                          ? "❄️"
+                          : facility === "Kamar Mandi Dalam"
+                          ? "🚿"
+                          : facility === "Dapur Bersama"
+                          ? "🍳"
+                          : facility === "Parkir Motor"
+                          ? "🏍️"
+                          : "✅"}
                       </span>
-                      <span className="font-bold text-sm uppercase">{facility}</span>
+                      <span className="font-bold text-sm uppercase">
+                        {facility.replace(/[\[\]"]/g, "")}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -203,7 +226,6 @@ function KostDetailPage() {
                 </ul>
               </div>
               */}
-
             </div>
 
             {/* Right Column - Booking Card */}
@@ -254,7 +276,9 @@ function KostDetailPage() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between font-bold text-lg">
                         <span>Sewa {duration} bulan:</span>
-                        <span className="text-ocean-blue">{formatPrice(calculateTotal())}</span>
+                        <span className="text-ocean-blue">
+                          {formatPrice(calculateTotal())}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -274,14 +298,20 @@ function KostDetailPage() {
                     <div className="flex items-center">
                       <div className="w-12 h-12 bg-ocean-blue brutalist-border flex items-center justify-center mr-3">
                         <span className="text-white font-bold text-lg">
-                          {kost.nama_pemilik?.charAt(0) || 'P'}
+                          {kost.nama_pemilik?.charAt(0) || "P"}
                         </span>
                       </div>
                       <div>
-                        <p className="font-bold">{kost.nama_pemilik || 'Pemilik'}</p>
+                        <p className="font-bold">
+                          {kost.nama_pemilik || "Pemilik"}
+                        </p>
                         <div className="flex items-center">
-                          <span className="text-sm text-gray-600 mr-2">Pemilik</span>
-                          <span className="text-green-600 text-sm">✓ Terverifikasi</span>
+                          <span className="text-sm text-gray-600 mr-2">
+                            Pemilik
+                          </span>
+                          <span className="text-green-600 text-sm">
+                            ✓ Terverifikasi
+                          </span>
                         </div>
                       </div>
                     </div>

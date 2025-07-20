@@ -35,7 +35,7 @@ function LandingPage() {
                 <br />
                 <span className="text-ocean-blue">CARI KOST</span>
                 <br />
-                DI SEMARANG
+                DI INDONESIA
               </h1>
               <p className="text-xl lg:text-2xl font-medium mb-8 leading-relaxed">
                 Temukan kost impian dengan mudah, aman, dan terpercaya. Kostku
@@ -57,7 +57,7 @@ function LandingPage() {
             <div className="bg-midnight-blue p-8 brutalist-border brutalist-shadow">
               <div className="text-white">
                 <h3 className="text-2xl font-bold mb-4 uppercase">
-                  STATISTIK KOSTKU
+                  STATISTIK CHEKOST
                 </h3>
                 <div className="space-y-4">
                   <div className="flex justify-between">
@@ -66,11 +66,11 @@ function LandingPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Mahasiswa Aktif:</span>
-                    <span className="font-black text-xl">50,000+</span>
+                    <span className="font-black text-xl">1000+</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Kota:</span>
-                    <span className="font-black text-xl">100+</span>
+                    <span className="font-black text-xl">1+</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Rating Rata-rata:</span>
@@ -144,7 +144,7 @@ function LandingPage() {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-5xl font-black uppercase mb-8">
-            <span className="text-ocean-blue">KOSTKU</span> ADALAH SOLUSINYA
+            <span className="text-ocean-blue">CHEKOST</span> ADALAH SOLUSINYA
           </h2>
           <p className="text-xl lg:text-2xl font-medium mb-12 max-w-4xl mx-auto leading-relaxed">
             Platform digital dua sisi yang menghubungkan mahasiswa dan pemilik
