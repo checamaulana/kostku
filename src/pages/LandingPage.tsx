@@ -38,9 +38,9 @@ function LandingPage() {
                 DI INDONESIA
               </h1>
               <p className="text-xl lg:text-2xl font-medium mb-8 leading-relaxed">
-                Temukan kost impian dengan mudah, aman, dan terpercaya. Kostku
+                Temukan kost impian dengan mudah, aman, dan terpercaya. Chekost
                 menghubungkan mahasiswa dengan pemilik kost terbaik di seluruh
-                Semarang.
+                Indonesia.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
