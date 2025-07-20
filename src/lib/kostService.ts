@@ -47,7 +47,16 @@ export const getAllKost = async (): Promise<Kost[]> => {
       throw error
     }
 
-    return data || []
+    // Transformasi data fasilitas dari string ke array of strings
+    const transformedData = data?.map(kost => ({
+      ...kost,
+      fasilitas: typeof kost.fasilitas === 'string'
+        ? kost.fasilitas.split(',').map(f => f.trim())
+        : [],
+    })) || []
+
+
+    return transformedData
   } catch (error) {
     console.error('Error in getAllKost:', error)
     return []
@@ -68,7 +77,19 @@ export const getKostById = async (id: number): Promise<Kost | null> => {
       throw error
     }
 
-    return data
+    if (!data) {
+      return null
+    }
+
+    // Transformasi data fasilitas dari string ke array of strings
+    const transformedData = {
+      ...data,
+      fasilitas: typeof data.fasilitas === 'string'
+        ? data.fasilitas.split(',').map(f => f.trim())
+        : [],
+    }
+
+    return transformedData
   } catch (error) {
     console.error('Error in getKostById:', error)
     return null
