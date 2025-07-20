@@ -1,8 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { supabase } from '../lib/supabaseClient';
 
 function LandingPage() {
+  const [kostCount, setKostCount] = useState(0);
+
+  useEffect(() => {
+    const fetchKostCount = async () => {
+      const { count, error } = await supabase
+        .from('kost')
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        console.error('Error fetching kost count:', error);
+      } else {
+        setKostCount(count || 0);
+      }
+    };
+    fetchKostCount();
+  }, []);
   return (
     <div className="min-h-screen bg-pale-sky text-midnight-blue font-sans">
       <Header currentPage="landing" />
@@ -44,7 +62,7 @@ function LandingPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between">
                     <span className="font-medium">Kost Tersedia:</span>
-                    <span className="font-black text-xl">10,000+</span>
+                    <span className="font-black text-xl">{kostCount}+</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Mahasiswa Aktif:</span>

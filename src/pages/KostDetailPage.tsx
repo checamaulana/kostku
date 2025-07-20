@@ -1,108 +1,49 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
-// Extended dummy data with detailed information
-const kostDetailData = {
-  '1': {
-    id: '1',
-    name: 'Kost Sari Asih',
-    location: 'Tembalang, Semarang',
-    pricePerMonth: 1200000,
-    type: 'putri' as const,
-    rating: 4.8,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Dapur Bersama', 'Parkir Motor'],
-    description: 'Kost Sari Asih adalah hunian nyaman khusus putri yang berlokasi strategis di Tembalang, dekat dengan Universitas Diponegoro. Lingkungan yang aman dengan penjagaan 24 jam dan fasilitas lengkap membuat kost ini menjadi pilihan favorit mahasiswi.',
-    rules: [
-      'Jam malam maksimal 22:00 WIB',
-      'Tidak diperbolehkan membawa tamu lawan jenis',
-      'Dilarang merokok di dalam kamar',
-      'Wajib menjaga kebersihan area bersama',
-      'Deposit akan dikembalikan jika tidak ada kerusakan'
-    ],
-    images: [
-      '/placeholder-room-1.jpg',
-      '/placeholder-room-2.jpg',
-      '/placeholder-room-3.jpg',
-      '/placeholder-common-area.jpg'
-    ],
-    owner: {
-      name: 'Bu Sari',
-      phone: '081234567890',
-      verified: true
-    },
-
-  },
-  '2': {
-    id: '2',
-    name: 'Kost Mandiri Jaya',
-    location: 'Undip, Semarang',
-    pricePerMonth: 1500000,
-    type: 'putra' as const,
-    rating: 4.6,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Laundry'],
-    description: 'Kost Mandiri Jaya menyediakan hunian modern khusus putra dengan lokasi strategis dekat dengan kampus Undip. Dilengkapi dengan fasilitas laundry dan AC untuk kenyamanan maksimal para penghuni.',
-    rules: [
-      'Jam malam maksimal 23:00 WIB',
-      'Tidak diperbolehkan membawa tamu wanita ke kamar',
-      'Dilarang merokok di area kamar',
-      'Wajib menjaga kebersihan dan ketertiban',
-      'Biaya rusak atau hilang ditanggung penghuni'
-    ],
-    images: [
-      '/placeholder-room-putra-1.jpg',
-      '/placeholder-room-putra-2.jpg',
-      '/placeholder-bathroom.jpg',
-      '/placeholder-laundry.jpg'
-    ],
-    owner: {
-      name: 'Pak Jaya',
-      phone: '081234567891',
-      verified: true
-    },
-
-  },
-  '3': {
-    id: '3',
-    name: 'Kost Graha Indah',
-    location: 'Pleburan, Semarang',
-    pricePerMonth: 900000,
-    type: 'campur' as const,
-    rating: 4.3,
-    facilities: ['WiFi', 'Kamar Mandi Luar', 'Dapur Bersama'],
-    description: 'Kost Graha Indah menawarkan hunian terjangkau dengan suasana kekeluargaan. Cocok untuk mahasiswa yang mencari tempat tinggal ekonomis namun nyaman dengan fasilitas dapur bersama.',
-    rules: [
-      'Jam malam maksimal 22:30 WIB',
-      'Tamu lawan jenis hanya boleh di area umum',
-      'Dilarang memasak di kamar',
-      'Bergantian menggunakan fasilitas bersama',
-      'Kebersihan kamar mandi bersama tanggung jawab bersama'
-    ],
-    images: [
-      '/placeholder-room-campur-1.jpg',
-      '/placeholder-kitchen.jpg',
-      '/placeholder-bathroom-shared.jpg',
-      '/placeholder-common-room.jpg'
-    ],
-    owner: {
-      name: 'Bu Indah',
-      phone: '081234567892',
-      verified: true
-    },
-
-  }
-};
+import { getKostById } from '../lib/kostService';
+import { type Kost } from '../lib/supabaseClient';
 
 function KostDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const [kost, setKost] = useState<Kost | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [checkInDate, setCheckInDate] = useState('');
   const [duration, setDuration] = useState('1');
 
-  const kost = kostDetailData[id as keyof typeof kostDetailData];
+  useEffect(() => {
+    const fetchKostDetail = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const data = await getKostById(parseInt(id));
+        setKost(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching kost detail:', err);
+        setError('Gagal memuat detail kost.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchKostDetail();
+  }, [id]);
 
-  if (!kost) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-pale-sky flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl animate-spin">⏳</div>
+          <p className="mt-4 text-xl font-bold">Memuat detail kost...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !kost) {
     return (
       <div className="min-h-screen bg-pale-sky text-midnight-blue font-sans">
         <Header currentPage="daftar-kost" />
@@ -138,9 +79,11 @@ function KostDetailPage() {
   };
 
   const calculateTotal = () => {
-    const monthlyPrice = kost.pricePerMonth * parseInt(duration);
+    const monthlyPrice = kost.harga * parseInt(duration);
     return monthlyPrice;
   };
+
+  const safeFacilities = Array.isArray(kost.fasilitas) ? kost.fasilitas : [];
 
   return (
     <div className="min-h-screen bg-pale-sky text-midnight-blue font-sans">
@@ -154,8 +97,8 @@ function KostDetailPage() {
             <div className="lg:col-span-3">
               <div className="h-96 lg:h-[500px] brutalist-border brutalist-shadow overflow-hidden">
                 <img
-                  src={kost.images[selectedImage]}
-                  alt={`${kost.name} - Gambar ${selectedImage + 1}`}
+                  src={kost.foto}
+                  alt={`${kost.nama} - Gambar ${selectedImage + 1}`}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     e.currentTarget.src = `data:image/svg+xml;charset=UTF-8,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-size='18' text-anchor='middle' dy='.3em' fill='%236b7280'%3EGambar Kost%3C/text%3E%3C/svg%3E`;
@@ -166,7 +109,7 @@ function KostDetailPage() {
             
             {/* Thumbnail Images */}
             <div className="grid grid-cols-4 lg:grid-cols-1 gap-4">
-              {kost.images.map((image, index) => (
+              {[kost.foto, '/placeholder-room-2.jpg', '/placeholder-room-3.jpg', '/placeholder-common-area.jpg'].map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -176,7 +119,7 @@ function KostDetailPage() {
                 >
                   <img
                     src={image}
-                    alt={`${kost.name} - Thumbnail ${index + 1}`}
+                    alt={`${kost.nama} - Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = `data:image/svg+xml;charset=UTF-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-size='12' text-anchor='middle' dy='.3em' fill='%236b7280'%3E${index + 1}%3C/text%3E%3C/svg%3E`;
@@ -200,16 +143,16 @@ function KostDetailPage() {
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                   <div>
                     <h1 className="text-3xl lg:text-4xl font-black uppercase mb-2">
-                      {kost.name}
+                      {kost.nama}
                     </h1>
                     <p className="text-xl font-medium text-gray-700 flex items-center">
                       <span className="mr-2">📍</span>
-                      {kost.location}
+                      {kost.alamat}
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                    <div className={`px-3 py-1 font-bold text-sm brutalist-border uppercase ${getTypeColor(kost.type)}`}>
-                      {kost.type}
+                    <div className={`px-3 py-1 font-bold text-sm brutalist-border uppercase ${getTypeColor(kost.tipe)}`}>
+                      {kost.tipe}
                     </div>
                     <div className="flex items-center">
                       <span className="text-2xl mr-1">⭐</span>
@@ -219,7 +162,7 @@ function KostDetailPage() {
                 </div>
                 
                 <p className="text-lg leading-relaxed text-gray-800">
-                  {kost.description}
+                  {kost.deskripsi}
                 </p>
               </div>
 
@@ -227,7 +170,7 @@ function KostDetailPage() {
               <div className="bg-white p-8 brutalist-border brutalist-shadow">
                 <h2 className="text-2xl font-black uppercase mb-6">FASILITAS</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {kost.facilities.map((facility, index) => (
+                  {safeFacilities.map((facility, index) => (
                     <div
                       key={index}
                       className="flex items-center bg-pale-sky p-4 brutalist-border"
@@ -246,6 +189,8 @@ function KostDetailPage() {
               </div>
 
               {/* Rules */}
+              {/* Rules are not in the database model, so this section is removed or commented out */}
+              {/* 
               <div className="bg-white p-8 brutalist-border brutalist-shadow">
                 <h2 className="text-2xl font-black uppercase mb-6">PERATURAN KOST</h2>
                 <ul className="space-y-3">
@@ -257,6 +202,7 @@ function KostDetailPage() {
                   ))}
                 </ul>
               </div>
+              */}
 
             </div>
 
@@ -265,7 +211,7 @@ function KostDetailPage() {
               <div className="bg-white p-8 brutalist-border brutalist-shadow sticky top-8">
                 <div className="mb-6">
                   <div className="text-3xl font-black text-ocean-blue mb-2">
-                    {formatPrice(kost.pricePerMonth)}
+                    {formatPrice(kost.harga)}
                   </div>
                   <div className="text-sm font-medium text-gray-600 uppercase">
                     PER BULAN
@@ -328,16 +274,14 @@ function KostDetailPage() {
                     <div className="flex items-center">
                       <div className="w-12 h-12 bg-ocean-blue brutalist-border flex items-center justify-center mr-3">
                         <span className="text-white font-bold text-lg">
-                          {kost.owner.name.charAt(0)}
+                          {kost.nama_pemilik?.charAt(0) || 'P'}
                         </span>
                       </div>
                       <div>
-                        <p className="font-bold">{kost.owner.name}</p>
+                        <p className="font-bold">{kost.nama_pemilik || 'Pemilik'}</p>
                         <div className="flex items-center">
                           <span className="text-sm text-gray-600 mr-2">Pemilik</span>
-                          {kost.owner.verified && (
-                            <span className="text-green-600 text-sm">✓ Terverifikasi</span>
-                          )}
+                          <span className="text-green-600 text-sm">✓ Terverifikasi</span>
                         </div>
                       </div>
                     </div>

@@ -1,38 +1,55 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
-// Dummy data for a specific kost
-const dummyKostData = {
-  id: '1',
-  name: 'Kost Sari Asih',
-  location: 'Tembalang, Semarang',
-  pricePerMonth: '1.200.000',
-  type: 'putri' as const,
-  rating: '4.8',
-  description: 'Kost putri eksklusif dengan fasilitas lengkap di lokasi strategis dekat kampus.',
-  facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Dapur Bersama', 'Parkir Motor'],
-  rules: ['Dilarang membawa hewan peliharaan', 'Tamu menginap lapor 24 jam'],
-  images: [] as File[],
-  ownerName: 'Ibu Sari',
-  ownerPhone: '081234567890',
-};
+import { getKostById, updateKost, uploadKostImage, type KostFormData } from '../lib/kostService';
 
 function EditKostPage() {
-  const { id } = useParams();
-  const [formData, setFormData] = useState(dummyKostData);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    location: '',
+    pricePerMonth: '',
+    type: 'putra' as 'putra' | 'putri' | 'campur',
+    rating: '',
+    description: '',
+    ownerName: '',
+    ownerPhone: '',
+    images: [] as File[],
+  });
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // In a real app, you would fetch the kost data based on the id
-    // For now, we just use the dummy data
-    console.log(`Editing kost with ID: ${id}`);
-    setFormData(dummyKostData);
-    setSelectedFacilities(dummyKostData.facilities);
+    const fetchKostData = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const kost = await getKostById(parseInt(id));
+        if (kost) {
+          setFormData({
+            name: kost.nama,
+            location: kost.alamat,
+            pricePerMonth: formatPrice(kost.harga.toString()),
+            type: kost.tipe,
+            rating: kost.rating.toString(),
+            description: kost.deskripsi,
+            ownerName: kost.nama_pemilik || '',
+            ownerPhone: kost.telepon_pemilik || '',
+            images: [], // Initialize with empty array
+          });
+          setSelectedFacilities(Array.isArray(kost.fasilitas) ? kost.fasilitas : []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch kost data:", error);
+        alert("Gagal memuat data kost.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchKostData();
   }, [id]);
   
   const availableFacilities = [
@@ -69,31 +86,7 @@ function EditKostPage() {
     });
   };
 
-  const handleRuleChange = (index: number, value: string) => {
-    const newRules = [...formData.rules];
-    newRules[index] = value;
-    setFormData(prev => ({
-      ...prev,
-      rules: newRules
-    }));
-  };
-
-  const addRule = () => {
-    setFormData(prev => ({
-      ...prev,
-      rules: [...prev.rules, '']
-    }));
-  };
-
-  const removeRule = (index: number) => {
-    if (formData.rules.length > 1) {
-      const newRules = formData.rules.filter((_, i) => i !== index);
-      setFormData(prev => ({
-        ...prev,
-        rules: newRules
-      }));
-    }
-  };
+  // Rules are not part of the schema, so these functions are removed.
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -112,14 +105,57 @@ function EditKostPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, just log the form data
-    console.log('Updated Form Data:', {
-      ...formData,
-      facilities: selectedFacilities
-    });
-    alert('Data kost berhasil diperbarui! (UI Demo)');
+    if (!id) return;
+
+    setIsSubmitting(true);
+    try {
+      let imageUrl;
+      // If a new image is selected, upload it
+      if (formData.images && formData.images.length > 0) {
+        const uploadedUrl = await uploadKostImage(formData.images[0]);
+        if (uploadedUrl) {
+          imageUrl = uploadedUrl;
+        } else {
+          throw new Error('Image upload failed');
+        }
+      }
+
+      const priceNumber = parseInt(formData.pricePerMonth.replace(/\./g, ''));
+      const ratingNumber = parseFloat(formData.rating);
+
+      const updatedData: Partial<KostFormData> = {
+        nama: formData.name,
+        alamat: formData.location,
+        harga: priceNumber,
+        tipe: formData.type,
+        rating: ratingNumber,
+        deskripsi: formData.description,
+        fasilitas: selectedFacilities,
+        nama_pemilik: formData.ownerName,
+        telepon_pemilik: formData.ownerPhone,
+      };
+
+      // Only add 'foto' to the update if a new image was uploaded
+      if (imageUrl) {
+        updatedData.foto = imageUrl;
+      }
+
+      const success = await updateKost(parseInt(id), updatedData);
+
+      if (success) {
+        alert('Data kost berhasil diperbarui!');
+        navigate('/admin');
+      } else {
+        alert('Gagal memperbarui data kost.');
+      }
+    } catch (error) {
+      console.error('Error updating kost:', error);
+      alert('Terjadi kesalahan saat memperbarui data.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formatPrice = (value: string) => {
@@ -293,41 +329,7 @@ function EditKostPage() {
                 </div>
               </div>
 
-              {/* Rules */}
-              <div>
-                <label className="block text-sm font-bold uppercase mb-4">
-                  PERATURAN KOST
-                </label>
-                <div className="space-y-3">
-                  {formData.rules.map((rule, index) => (
-                    <div key={index} className="flex gap-3">
-                      <input
-                        type="text"
-                        value={rule}
-                        onChange={(e) => handleRuleChange(index, e.target.value)}
-                        className="flex-1 px-4 py-3 brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all"
-                        placeholder={`Peraturan ${index + 1}...`}
-                      />
-                      {formData.rules.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeRule(index)}
-                          className="px-4 py-3 bg-red-500 text-white font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1"
-                        >
-                          HAPUS
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={addRule}
-                    className="px-6 py-3 bg-green-600 text-white font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase"
-                  >
-                    + TAMBAH PERATURAN
-                  </button>
-                </div>
-              </div>
+              {/* Rules section removed as it's not in the DB schema */}
 
               {/* Images */}
               <div>
@@ -424,9 +426,14 @@ function EditKostPage() {
                 </Link>
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-ocean-blue text-white font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1"
+                  disabled={isSubmitting || loading}
+                  className={`px-8 py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 ${
+                    isSubmitting || loading
+                      ? 'bg-gray-400 text-white cursor-not-allowed'
+                      : 'bg-ocean-blue text-white'
+                  }`}
                 >
-                  SIMPAN PERUBAHAN
+                  {isSubmitting ? 'MENYIMPAN...' : 'SIMPAN PERUBAHAN'}
                 </button>
               </div>
             </form>

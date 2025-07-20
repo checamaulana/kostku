@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import ConfirmDialog from './ConfirmDialog';
+import { deleteKost } from '../lib/kostService';
 
 interface AdminKostCardProps {
   id: string;
@@ -11,6 +12,7 @@ interface AdminKostCardProps {
   type: 'putra' | 'putri' | 'campur';
   rating?: number;
   facilities?: string[];
+  onDelete?: () => void;
 }
 
 function AdminKostCard({ 
@@ -21,9 +23,12 @@ function AdminKostCard({
   image, 
   type, 
   rating = 4.5,
-  facilities = []
+  facilities = [],
+  onDelete
 }: AdminKostCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const safeFacilities = Array.isArray(facilities) ? facilities : [];
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -52,9 +57,27 @@ function AdminKostCard({
     setIsDialogOpen(true);
   };
 
-  const handleConfirmDelete = () => {
-    alert(`Kost "${name}" telah dihapus! (UI Demo)`);
-    setIsDialogOpen(false);
+  const handleConfirmDelete = async () => {
+    try {
+      setIsDeleting(true);
+      const success = await deleteKost(parseInt(id));
+      
+      if (success) {
+        alert(`Kost "${name}" berhasil dihapus!`);
+        setIsDialogOpen(false);
+        // Call parent component's onDelete callback to refresh data
+        if (onDelete) {
+          onDelete();
+        }
+      } else {
+        alert('Gagal menghapus kost. Silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('Error deleting kost:', error);
+      alert('Terjadi kesalahan saat menghapus kost.');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -113,10 +136,10 @@ function AdminKostCard({
         </div>
 
         {/* Facilities */}
-        {facilities.length > 0 && (
+        {safeFacilities.length > 0 && (
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
-              {facilities.slice(0, 3).map((facility, index) => (
+              {safeFacilities.slice(0, 3).map((facility, index) => (
                 <span
                   key={index}
                   className="text-xs font-bold bg-pale-sky text-midnight-blue px-2 py-1 brutalist-border uppercase"
@@ -124,9 +147,9 @@ function AdminKostCard({
                   {facility}
                 </span>
               ))}
-              {facilities.length > 3 && (
+              {safeFacilities.length > 3 && (
                 <span className="text-xs font-bold bg-gray-200 text-midnight-blue px-2 py-1 brutalist-border">
-                  +{facilities.length - 3} LAGI
+                  +{safeFacilities.length - 3} LAGI
                 </span>
               )}
             </div>
@@ -151,9 +174,12 @@ function AdminKostCard({
         
         <button 
           onClick={handleDelete}
-          className="w-full mt-3 bg-red-600 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm"
+          disabled={isDeleting}
+          className={`w-full mt-3 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm ${
+            isDeleting ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600'
+          }`}
         >
-          HAPUS KOST
+          {isDeleting ? 'MENGHAPUS...' : 'HAPUS KOST'}
         </button>
       </div>
     </div>

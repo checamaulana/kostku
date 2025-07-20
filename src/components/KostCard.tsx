@@ -19,8 +19,9 @@ function KostCard({
   image, 
   type, 
   rating = 4.5,
-  facilities = [] 
+  facilities = []
 }: KostCardProps) {
+  const safeFacilities = Array.isArray(facilities) ? facilities : [];
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -85,10 +86,10 @@ function KostCard({
         </div>
 
         {/* Facilities */}
-        {facilities.length > 0 && (
+        {safeFacilities.length > 0 && (
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
-              {facilities.slice(0, 3).map((facility, index) => (
+              {safeFacilities.slice(0, 3).map((facility, index) => (
                 <span
                   key={index}
                   className="text-xs font-bold bg-pale-sky text-midnight-blue px-2 py-1 brutalist-border uppercase"
@@ -96,9 +97,9 @@ function KostCard({
                   {facility}
                 </span>
               ))}
-              {facilities.length > 3 && (
+              {safeFacilities.length > 3 && (
                 <span className="text-xs font-bold bg-gray-200 text-midnight-blue px-2 py-1 brutalist-border">
-                  +{facilities.length - 3} LAGI
+                  +{safeFacilities.length - 3} LAGI
                 </span>
               )}
             </div>

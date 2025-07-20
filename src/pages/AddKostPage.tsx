@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { createKost, uploadKostImage, type KostFormData } from '../lib/kostService';
 
 function AddKostPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     location: '',
@@ -19,6 +21,7 @@ function AddKostPage() {
   });
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const availableFacilities = [
     'WiFi',
@@ -97,14 +100,51 @@ function AddKostPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, just log the form data
-    console.log('Form Data:', {
-      ...formData,
-      facilities: selectedFacilities
-    });
-    alert('Data kost berhasil ditambahkan! (UI Demo)');
+    setIsSubmitting(true);
+
+    try {
+      let imageUrl = 'default-kost.jpg'; // Default image
+      if (formData.images.length > 0) {
+        const uploadedUrl = await uploadKostImage(formData.images[0]);
+        if (uploadedUrl) {
+          imageUrl = uploadedUrl;
+        } else {
+          throw new Error('Image upload failed');
+        }
+      }
+
+      const priceNumber = parseInt(formData.pricePerMonth.replace(/\./g, ''));
+      const ratingNumber = parseFloat(formData.rating);
+
+      const newKostData: KostFormData = {
+        nama: formData.name,
+        alamat: formData.location,
+        harga: priceNumber,
+        tipe: formData.type,
+        rating: ratingNumber,
+        deskripsi: formData.description,
+        fasilitas: selectedFacilities,
+        foto: imageUrl,
+        nama_pemilik: formData.ownerName,
+        telepon_pemilik: formData.ownerPhone,
+      };
+
+      const createdKost = await createKost(newKostData);
+
+      if (createdKost) {
+        alert('Kost baru berhasil ditambahkan!');
+        navigate('/admin');
+      } else {
+        alert('Gagal menambahkan kost baru.');
+      }
+    } catch (error) {
+      console.error('Error creating kost:', error);
+      alert('Terjadi kesalahan saat menambahkan kost.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -427,9 +467,14 @@ function AddKostPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-ocean-blue text-white font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1"
+                  disabled={isSubmitting}
+                  className={`px-8 py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 ${
+                    isSubmitting 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : 'bg-ocean-blue text-white'
+                  }`}
                 >
-                  TAMBAH KOST
+                  {isSubmitting ? 'MENYIMPAN...' : 'TAMBAH KOST'}
                 </button>
               </div>
             </form>

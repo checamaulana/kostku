@@ -1,83 +1,66 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AdminKostCard from '../components/AdminKostCard';
-
-// Extended dummy data for admin dashboard
-const adminKostData = [
-  {
-    id: '1',
-    name: 'Kost Sari Asih',
-    location: 'Tembalang, Semarang',
-    pricePerMonth: 1200000,
-    type: 'putri' as const,
-    rating: 4.8,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Dapur Bersama', 'Parkir Motor'],
-  },
-  {
-    id: '2',
-    name: 'Kost Mandiri Jaya',
-    location: 'Undip, Semarang',
-    pricePerMonth: 1500000,
-    type: 'putra' as const,
-    rating: 4.6,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Laundry'],
-  },
-  {
-    id: '3',
-    name: 'Kost Graha Indah',
-    location: 'Pleburan, Semarang',
-    pricePerMonth: 900000,
-    type: 'campur' as const,
-    rating: 4.3,
-    facilities: ['WiFi', 'Kamar Mandi Luar', 'Dapur Bersama'],
-  },
-  {
-    id: '5',
-    name: 'Kost Putra Bangsa',
-    location: 'Banyumanik, Semarang',
-    pricePerMonth: 1300000,
-    type: 'putra' as const,
-    rating: 4.5,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Gym', 'Parkir Motor'],
-  },
-  {
-    id: '6',
-    name: 'Kost Keluarga Bahagia',
-    location: 'Gayamsari, Semarang',
-    pricePerMonth: 800000,
-    type: 'campur' as const,
-    rating: 4.2,
-    facilities: ['WiFi', 'Dapur Bersama', 'Parkir Motor'],
-  },
-  {
-    id: '8',
-    name: 'Kost Merdeka',
-    location: 'Semarang Tengah, Semarang',
-    pricePerMonth: 1600000,
-    type: 'putra' as const,
-    rating: 4.4,
-    facilities: ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Rooftop'],
-  }
-];
+import { getAllKost, searchKost } from '../lib/kostService';
+import { type Kost } from '../lib/supabaseClient';
 
 function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'putra' | 'putri' | 'campur'>('all');
+  const [kostData, setKostData] = useState<Kost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Filter kost data based on search and filters
-  const filteredKost = adminKostData.filter(kost => {
-    const matchesSearch = kost.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         kost.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesType = typeFilter === 'all' || kost.type === typeFilter;
+  // Fetch data dari Supabase
+  useEffect(() => {
+    loadKostData();
+  }, []);
 
-    return matchesSearch && matchesType;
-  });
+  const loadKostData = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllKost();
+      setKostData(data);
+      setError(null);
+    } catch (err) {
+      console.error('Error loading kost data:', err);
+      setError('Gagal memuat data kost');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle search
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchQuery.trim()) {
+        try {
+          const filteredData = await searchKost(
+            searchQuery,
+            typeFilter !== 'all' ? typeFilter : undefined
+          );
+          setKostData(filteredData);
+        } catch (err) {
+          console.error('Error searching kost:', err);
+          setError('Gagal mencari data kost');
+        }
+      } else {
+        // Jika tidak ada pencarian, ambil semua data dan filter berdasarkan tipe
+        const allData = await getAllKost();
+        const filtered = typeFilter === 'all' ? allData : allData.filter(kost => kost.tipe === typeFilter);
+        setKostData(filtered);
+      }
+    };
+
+    const debounceTimer = setTimeout(handleSearch, 300);
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery, typeFilter]);
 
   // Calculate stats
-  const totalKost = adminKostData.length;
+  const totalKost = kostData.length;
+  const filteredKost = kostData;
 
   return (
     <div className="min-h-screen bg-pale-sky text-midnight-blue font-sans">
@@ -137,7 +120,7 @@ function AdminDashboard() {
             <div>
               <select
                 value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value as any)}
+                onChange={(e) => setTypeFilter(e.target.value as 'all' | 'putra' | 'putri' | 'campur')}
                 className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               >
                 <option value="all">SEMUA TIPE</option>
@@ -170,18 +153,31 @@ function AdminDashboard() {
       {/* Kost Grid */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          {filteredKost.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="text-4xl animate-spin">⏳</div>
+              <p className="mt-4 text-xl font-bold">Memuat data kost...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-16 bg-red-100 text-red-700 p-8 brutalist-border">
+              <div className="text-4xl">😭</div>
+              <h3 className="text-2xl font-black uppercase mt-4">Terjadi Kesalahan</h3>
+              <p className="mt-2 text-lg">{error}</p>
+            </div>
+          ) : filteredKost.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredKost.map((kost) => (
                 <AdminKostCard
                   key={kost.id}
-                  id={kost.id}
-                  name={kost.name}
-                  location={kost.location}
-                  pricePerMonth={kost.pricePerMonth}
-                  type={kost.type}
+                  id={kost.id?.toString() || ''}
+                  name={kost.nama}
+                  location={kost.alamat}
+                  pricePerMonth={kost.harga}
+                  type={kost.tipe}
                   rating={kost.rating}
-                  facilities={kost.facilities}
+                  facilities={kost.fasilitas}
+                  image={kost.foto}
+                  onDelete={loadKostData}
                 />
               ))}
             </div>
