@@ -86,7 +86,7 @@ function AdminKostCard({
 
   return (
     <>
-      <div className="bg-white brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+      <div className="bg-white brutalist-border brutalist-shadow rounded-lg transition-all hover:translate-x-1 hover:translate-y-1">
         {/* Image placeholder */}
         <div className="h-48 bg-gray-200 brutalist-border relative overflow-hidden">
           {image ? (
@@ -168,13 +168,13 @@ function AdminKostCard({
           <div className="grid grid-cols-2 gap-3">
             <Link
               to={`/kost/${id}`}
-              className="bg-midnight-blue text-white py-3 font-bold text-center brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 block uppercase text-sm"
+              className="bg-midnight-blue text-white py-3 font-bold text-center brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 block uppercase text-sm"
             >
               LIHAT DETAIL
             </Link>
             <Link
               to={`/admin/edit-kost/${id}`}
-              className="bg-yellow-600 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm text-center"
+              className="bg-yellow-600 text-white py-3 font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm text-center"
             >
               EDIT
             </Link>
@@ -183,7 +183,7 @@ function AdminKostCard({
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className={`w-full mt-3 text-white py-3 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm ${
+            className={`w-full mt-3 text-white py-3 font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-sm ${
               isDeleting ? "bg-gray-400 cursor-not-allowed" : "bg-red-600"
             }`}
           >

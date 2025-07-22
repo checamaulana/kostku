@@ -148,7 +148,7 @@ function KostDetailPage() {
             {/* Left Column - Details */}
             <div className="lg:col-span-2 space-y-8">
               {/* Basic Info */}
-              <div className="bg-white p-8 brutalist-border brutalist-shadow">
+              <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg">
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                   <div>
                     <h1 className="text-3xl lg:text-4xl font-black uppercase mb-2">
@@ -180,7 +180,7 @@ function KostDetailPage() {
               </div>
 
               {/* Facilities */}
-              <div className="bg-white p-8 brutalist-border brutalist-shadow">
+              <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg">
                 <h2 className="text-2xl font-black uppercase mb-6">
                   FASILITAS
                 </h2>
@@ -230,7 +230,7 @@ function KostDetailPage() {
 
             {/* Right Column - Booking Card */}
             <div className="lg:col-span-1">
-              <div className="bg-white p-8 brutalist-border brutalist-shadow sticky top-8">
+              <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg sticky top-8">
                 <div className="mb-6">
                   <div className="text-3xl font-black text-ocean-blue mb-2">
                     {formatPrice(kost.harga)}
@@ -250,7 +250,7 @@ function KostDetailPage() {
                       type="date"
                       value={checkInDate}
                       onChange={(e) => setCheckInDate(e.target.value)}
-                      className="w-full px-4 py-3 brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all"
+                      className="w-full px-4 py-3 brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all"
                     />
                   </div>
 
@@ -261,7 +261,7 @@ function KostDetailPage() {
                     <select
                       value={duration}
                       onChange={(e) => setDuration(e.target.value)}
-                      className="w-full px-4 py-3 brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all"
+                      className="w-full px-4 py-3 brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all"
                     >
                       <option value="1">1 BULAN</option>
                       <option value="3">3 BULAN</option>
@@ -271,7 +271,7 @@ function KostDetailPage() {
                   </div>
 
                   {/* Price Breakdown */}
-                  <div className="bg-pale-sky p-4 brutalist-border">
+                  <div className="bg-pale-sky p-4 brutalist-border rounded-none">
                     <h3 className="font-bold uppercase mb-3">RINCIAN BIAYA</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between font-bold text-lg">
@@ -285,10 +285,10 @@ function KostDetailPage() {
 
                   {/* Action Buttons */}
                   <div className="space-y-4">
-                    <button className="w-full bg-ocean-blue text-white py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+                    <button className="w-full bg-ocean-blue text-white py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1">
                       BOOKING SEKARANG
                     </button>
-                    <button className="w-full bg-midnight-blue text-white py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+                    <button className="w-full bg-midnight-blue text-white py-4 font-bold text-lg uppercase brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1">
                       HUBUNGI PEMILIK
                     </button>
                   </div>

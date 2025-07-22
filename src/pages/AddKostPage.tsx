@@ -26,6 +26,7 @@ function AddKostPage() {
   const availableFacilities = [
     'WiFi',
     'AC',
+    'Kipas Angin',
     'Kamar Mandi Dalam',
     'Kamar Mandi Luar',
     'Dapur Bersama',
@@ -36,6 +37,8 @@ function AddKostPage() {
     'Cleaning Service',
     'Gym',
     'Rooftop',
+    'Kasur',
+    'Bantal/Guling',
     'Minimarket'
   ];
 

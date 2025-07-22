@@ -80,7 +80,7 @@ function AdminDashboard() {
             </div>
             <Link 
               to="/admin/tambah-kost"
-              className="bg-ocean-blue text-white px-8 py-4 font-bold text-xl brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-center"
+              className="bg-white text-midnight-blue px-8 py-4 font-bold text-xl brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 uppercase text-center"
             >
               + TAMBAH KOST BARU
             </Link>
@@ -92,7 +92,7 @@ function AdminDashboard() {
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center">
-            <div className="bg-white p-6 brutalist-border brutalist-shadow max-w-md w-full">
+            <div className="bg-white p-6 brutalist-border brutalist-shadow rounded-xl max-w-md w-full">
               <div className="text-3xl font-black text-midnight-blue mb-2">{totalKost}</div>
               <div className="text-sm font-bold uppercase">TOTAL KOST</div>
             </div>
@@ -111,7 +111,7 @@ function AdminDashboard() {
                 placeholder="CARI KOST ATAU LOKASI..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 font-bold text-lg placeholder-gray-500 brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
+                className="w-full px-4 py-3 font-bold text-lg placeholder-gray-500 brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               />
             </div>
 
@@ -121,7 +121,7 @@ function AdminDashboard() {
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value as 'all' | 'putra' | 'putri' | 'campur')}
-                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
+                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               >
                 <option value="all">SEMUA TIPE</option>
                 <option value="putra">PUTRA</option>

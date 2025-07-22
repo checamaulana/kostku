@@ -61,12 +61,12 @@ function Header({ currentPage }: HeaderProps) {
           {actualCurrentPage === 'landing' && (
             <Link 
               to="/daftar-kost"
-              className="bg-pale-sky text-midnight-blue px-6 py-2 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1"
+              className="bg-pale-sky text-midnight-blue px-6 py-2 font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1"
             >
               CARI KOST
             </Link>
           )}
-          <button className="bg-ocean-blue text-white px-6 py-2 font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+          <button className="bg-pale-sky text-midnight-blue px-6 py-2 font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1">
             MASUK
           </button>
         </div>

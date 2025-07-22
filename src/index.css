@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ocean-blue: hsl(217, 100%, 66%);
+  --color-ocean-blue: hsl(227, 40%, 21%);
   --color-deep-ocean-blue: hsl(217, 100%, 66%);
-  --color-pale-sky: hsl(214, 95%, 93%);
+  --color-pale-sky: hsl(0, 0%, 100%);
   --color-midnight-blue: hsl(227, 40%, 21%);
 }
 

@@ -9,19 +9,19 @@ function Footer() {
           <div>
             <h3 className="text-2xl font-black uppercase mb-4">Chekost</h3>
             <p className="text-lg">
-              Platform #1 untuk mencari dan mengelola kost di Indonesia.
+              Tempat ternyaman setelah rumah. Rasakan kenyamanan dan kehangatan di setiap sudut kost kami!
             </p>
           </div>
           <div>
             <h4 className="text-lg font-bold uppercase mb-4">PRODUK</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   Cari Kost
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   Daftarkan Kost
                 </a>
               </li>
@@ -31,17 +31,17 @@ function Footer() {
             <h4 className="text-lg font-bold uppercase mb-4">BANTUAN</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   Panduan
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   Kontak
                 </a>
               </li>
@@ -51,7 +51,7 @@ function Footer() {
             <h4 className="text-lg font-bold uppercase mb-4">Tentang Kami</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-ocean-blue">
+                <a href="#" className="hover:text-gray-400">
                   Blog
                 </a>
               </li>
@@ -60,7 +60,7 @@ function Footer() {
         </div>
         <div className="border-t border-gray-600 mt-8 pt-8 text-center">
           <p className="text-lg font-medium">
-            © 2025 CHEKOST. Made with ❤️
+            © 2025 CHEKOST. Made with ❤
           </p>
         </div>
       </div>

@@ -35,26 +35,25 @@ function LandingPage() {
                 <br />
                 <span className="text-ocean-blue">CARI KOST</span>
                 <br />
-                DI INDONESIA
+                DI SEMARANG
               </h1>
               <p className="text-xl lg:text-2xl font-medium mb-8 leading-relaxed">
-                Temukan kost impian dengan mudah, aman, dan terpercaya. Chekost
-                menghubungkan mahasiswa dengan pemilik kost terbaik di seluruh
-                Indonesia.
+                Temukan kost impian dengan mudah, aman, dan terpercaya. cheKost
+                menghubungkan mahasiswa dengan pemilik kost terbaik di sekitar Semarang.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   to="/daftar-kost"
-                  className="bg-ocean-blue text-white px-8 py-4 text-lg font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 inline-block text-center"
+                  className="bg-pale-sky text-midnight-blue px-8 py-4 text-lg font-bold brutalist-border brutalist-shadow  rounded-full transition-all hover:translate-x-1 hover:translate-y-1 inline-block text-center"
                 >
                   CARI KOST SEKARANG
                 </Link>
-                <button className="bg-pale-sky text-midnight-blue px-8 py-4 text-lg font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+                <button className="bg-pale-sky text-midnight-blue px-8 py-4 text-lg font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1">
                   DAFTARKAN KOST ANDA
                 </button>
               </div>
             </div>
-            <div className="bg-midnight-blue p-8 brutalist-border brutalist-shadow">
+            <div className="bg-midnight-blue p-8 brutalist-border brutalist-shadow rounded-xl ml-20">
               <div className="text-white">
                 <h3 className="text-2xl font-bold mb-4 uppercase">
                   STATISTIK CHEKOST
@@ -90,7 +89,7 @@ function LandingPage() {
             MASALAH YANG KITA SELESAIKAN
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white text-midnight-blue p-8 brutalist-border">
+            <div className="bg-white text-midnight-blue p-8 brutalist-border rounded-xl ">
               <h3 className="text-2xl font-bold uppercase mb-4 text-ocean-blue">
                 UNTUK MAHASISWA
               </h3>
@@ -113,7 +112,7 @@ function LandingPage() {
                 </li>
               </ul>
             </div>
-            <div className="bg-white text-midnight-blue p-8 brutalist-border">
+            <div className="bg-white text-midnight-blue p-8 brutalist-border rounded-xl">
               <h3 className="text-2xl font-bold uppercase mb-4 text-ocean-blue">
                 UNTUK PEMILIK KOST
               </h3>
@@ -150,7 +149,7 @@ function LandingPage() {
             Platform digital dua sisi yang menghubungkan mahasiswa dan pemilik
             kost dengan cara yang aman, transparan, dan efisien.
           </p>
-          <div className="bg-ocean-blue text-white p-12 brutalist-border brutalist-shadow">
+          <div className="bg-ocean-blue text-white p-12 brutalist-border brutalist-shadow rounded-xl">
             <h3 className="text-2xl font-bold uppercase mb-6">
               SEPERTI AIRBNB, TAPI UNTUK KOST MAHASISWA
             </h3>
@@ -168,19 +167,19 @@ function LandingPage() {
             FITUR UTAMA
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 brutalist-border brutalist-shadow">
+            <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg">
               <div className="w-16 h-16 bg-ocean-blue brutalist-border mb-6 flex items-center justify-center">
                 <span className="text-white font-black text-2xl">🔍</span>
               </div>
-              <h3 className="text-xl font-bold uppercase mb-4">
+              <h3 className="text-xl font-bold font-Inter uppercase mb-4">
                 PENCARIAN LENGKAP
               </h3>
-              <p className="text-lg">
+              <p className="text-lg font-poppins">
                 Filter berdasarkan lokasi, harga, fasilitas, dan tipe kost.
                 Temukan kost yang sesuai dengan kebutuhan Anda.
               </p>
             </div>
-            <div className="bg-white p-8 brutalist-border brutalist-shadow">
+            <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg">
               <div className="w-16 h-16 bg-ocean-blue brutalist-border mb-6 flex items-center justify-center">
                 <span className="text-white font-black text-2xl">✓</span>
               </div>
@@ -192,7 +191,7 @@ function LandingPage() {
                 detail, dan ulasan dari penghuni sebelumnya.
               </p>
             </div>
-            <div className="bg-white p-8 brutalist-border brutalist-shadow">
+            <div className="bg-white p-8 brutalist-border brutalist-shadow rounded-lg">
               <div className="w-16 h-16 bg-ocean-blue brutalist-border mb-6 flex items-center justify-center">
                 <span className="text-white font-black text-2xl">📱</span>
               </div>
@@ -311,16 +310,16 @@ function LandingPage() {
           </h2>
           <p className="text-xl lg:text-2xl font-medium mb-12">
             Bergabunglah dengan ribuan mahasiswa dan pemilik kost yang sudah
-            mempercayai Kostku
+            mempercayai cheKost
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               to="/daftar-kost"
-              className="bg-ocean-blue text-white px-12 py-6 text-xl font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 inline-block text-center"
+              className="bg-ocean-blue text-white px-12 py-6 text-xl font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 inline-block text-center"
             >
               DAFTAR SEBAGAI MAHASISWA
             </Link>
-            <button className="bg-midnight-blue text-white px-12 py-6 text-xl font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1">
+            <button className="bg-midnight-blue text-white px-12 py-6 text-xl font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1">
               DAFTAR SEBAGAI PEMILIK KOST
             </button>
           </div>

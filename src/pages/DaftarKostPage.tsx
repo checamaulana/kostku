@@ -91,7 +91,7 @@ function DaftarKostPage() {
                 placeholder="CARI KOST ATAU LOKASI..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 font-bold text-lg placeholder-gray-500 brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
+                className="w-full px-4 py-3 font-bold text-lg placeholder-gray-500 brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               />
             </div>
 
@@ -100,7 +100,7 @@ function DaftarKostPage() {
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value as 'all' | 'putra' | 'putri' | 'campur')}
-                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
+                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               >
                 <option value="all">SEMUA TIPE</option>
                 <option value="putra">PUTRA</option>
@@ -114,7 +114,7 @@ function DaftarKostPage() {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value as 'all' | 'low' | 'mid' | 'high')}
-                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
+                className="w-full px-4 py-3 font-bold text-lg brutalist-border brutalist-shadow rounded-full focus:outline-none focus:translate-x-1 focus:translate-y-1 transition-all uppercase"
               >
                 <option value="all">SEMUA HARGA</option>
                 <option value="low">&lt; 1 JUTA</option>

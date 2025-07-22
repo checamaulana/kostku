@@ -54,7 +54,23 @@ function EditKostPage() {
   
   const availableFacilities = [
     'WiFi',
+    'Kipas Angin',
+    'Kasur',
+    'Meja belajar',
+    'Kursi',
+    'Bantal',
+    'Guling',
+    'Jemuran',
+    'Sprei',
+    'Dapur Umum',
+    'Parkir Motor',
+    'Parkir Mobil',
     'AC',
+    'Lemari',
+    'Rak Sepatu',
+    'Kulkas',
+    'TV',
+    'Mesin Cuci',
     'Kamar Mandi Dalam',
     'Kamar Mandi Luar',
     'Dapur Bersama',
@@ -317,7 +333,7 @@ function EditKostPage() {
                       key={facility}
                       type="button"
                       onClick={() => handleFacilityToggle(facility)}
-                      className={`p-3 text-sm font-bold brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 ${
+                      className={`p-3 text-sm font-bold brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 ${
                         selectedFacilities.includes(facility)
                           ? 'bg-ocean-blue text-white'
                           : 'bg-white text-midnight-blue'

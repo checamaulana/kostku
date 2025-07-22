@@ -34,7 +34,7 @@ function KostCard({
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'putra':
-        return 'bg-ocean-blue text-white';
+        return 'bg-blue-500 text-white';
       case 'putri':
         return 'bg-pink-500 text-white';
       case 'campur':
@@ -45,7 +45,7 @@ function KostCard({
   };
 
   return (
-    <div className="bg-white brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 cursor-pointer">
+    <div className="bg-white brutalist-border brutalist-shadow rounded-lg transition-all hover:translate-x-1 hover:translate-y-1 cursor-pointer">
       {/* Image placeholder */}
       <div className="h-48 bg-gray-200 brutalist-border relative overflow-hidden">
         {image ? (
@@ -112,7 +112,7 @@ function KostCard({
 
         <Link
           to={`/kost/${id}`}
-          className="w-full bg-midnight-blue text-white py-3 font-bold text-lg uppercase brutalist-border brutalist-shadow transition-all hover:translate-x-1 hover:translate-y-1 block text-center"
+          className="w-full bg-midnight-blue text-white py-3 font-bold text-lg uppercase brutalist-border brutalist-shadow rounded-full transition-all hover:translate-x-1 hover:translate-y-1 block text-center"
         >
           LIHAT DETAIL
         </Link>
