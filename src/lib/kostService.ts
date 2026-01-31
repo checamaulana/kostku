@@ -148,10 +148,16 @@ export const searchKost = async (
   typeFilter?: "putra" | "putri" | "campur"
 ): Promise<Kost[]> => {
   try {
+    // Sanitize search term to prevent PostgREST filter injection
+    // Escape special characters (, ), and , that have special meaning in .or() filters
+    const sanitizedSearchTerm = searchTerm.replace(/[(),]/g, "");
+
     let query = supabase
       .from("kost")
       .select("*")
-      .or(`nama.ilike.%${searchTerm}%,alamat.ilike.%${searchTerm}%`);
+      .or(
+        `nama.ilike.%${sanitizedSearchTerm}%,alamat.ilike.%${sanitizedSearchTerm}%`
+      );
 
     if (typeFilter) {
       query = query.eq("tipe", typeFilter);
@@ -176,7 +182,9 @@ export const searchKost = async (
 // UPLOAD - Mengunggah gambar kost ke Supabase Storage
 export const uploadKostImage = async (file: File): Promise<string | null> => {
   try {
-    const fileName = `${Date.now()}-${file.name}`;
+    // Sanitize filename to prevent path traversal and other issues
+    const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const fileName = `${Date.now()}-${sanitizedFileName}`;
     const filePath = `public/${fileName}`;
 
     const { error: uploadError } = await supabase.storage

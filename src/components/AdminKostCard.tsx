@@ -152,7 +152,7 @@ function AdminKostCard({
                     key={index}
                     className="text-xs font-bold bg-pale-sky text-midnight-blue px-2 py-1 brutalist-border uppercase"
                   >
-                    {facility.replace(/[\[\]"]/g, "")}
+                    {facility.replace(/[[\]"]/g, "")}
                   </span>
                 ))}
                 {safeFacilities.length > 3 && (

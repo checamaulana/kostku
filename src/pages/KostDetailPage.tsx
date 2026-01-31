@@ -204,7 +204,7 @@ function KostDetailPage() {
                           : "✅"}
                       </span>
                       <span className="font-bold text-sm uppercase">
-                        {facility.replace(/[\[\]"]/g, "")}
+                        {facility.replace(/[[\]"]/g, "")}
                       </span>
                     </div>
                   ))}
